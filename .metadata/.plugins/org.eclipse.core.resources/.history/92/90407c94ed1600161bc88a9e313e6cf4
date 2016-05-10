@@ -1,0 +1,18 @@
+
+public class Receive implements AESCipher{
+	
+	private byte[][] cipher;
+	
+	public void encrypt(String text, String key){
+		
+	}
+	
+	public void decrypt(byte[][] cipher, String key){
+		
+	}
+	public String toString(){
+		String output = "";
+		
+		return output;
+	}
+}

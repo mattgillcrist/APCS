@@ -23,7 +23,7 @@ public class Receive implements AESCipher {
 		}
 		return shiftList;
 	}
-
+	
 	@Override
 	public int[][] mixColumns(int[][] state) {
 		// TODO Auto-generated method stub

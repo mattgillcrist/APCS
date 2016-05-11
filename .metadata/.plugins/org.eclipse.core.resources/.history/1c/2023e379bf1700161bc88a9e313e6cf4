@@ -1,7 +1,7 @@
 
 public class Transmit implements AESCipher {
 	// table used to mixColumns
-	private final byte[][] galoisTable = { { 0x02, 0x03, 0x01, 0x01 }, { 0x01, 0x02, 0x03, 0x01 },
+	private final int[][] galoisTable = { { 0x02, 0x03, 0x01, 0x01 }, { 0x01, 0x02, 0x03, 0x01 },
 			{ 0x01, 0x01, 0x02, 0x03 }, { 0x03, 0x01, 0x01, 0x02 } };
 
 	// sbox used to exand the key
@@ -53,13 +53,13 @@ public class Transmit implements AESCipher {
 	}
 
 	@Override
-	public void decrypt(int[][] cipher, String key) {
+	public void decrypt(byte[][] cipher, String key) {
 
 	}
 
 	@Override
-	public int[][] shiftRows(int[][] state) {
-		int[][] shiftList = state;
+	public byte[][] shiftRows(byte[][] state) {
+		byte[][] shiftList = state;
 		for (int r = 0; r < shiftList.length; r++) {
 			for (int c = 0; c < shiftList[0].length; c++) {
 				shiftList[r][c] = state[r][(c + r) % (shiftList.length)];
@@ -69,8 +69,9 @@ public class Transmit implements AESCipher {
 	}
 
 	@Override
-	public int[][] mixColumns(int[][] state) {
-		return null;
+	public byte[][] mixColumns(byte[][] state){
+				
+		return state;
 	}
 
 	@Override

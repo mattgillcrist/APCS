@@ -9,25 +9,19 @@ public class Receive implements AESCipher {
 	}
 
 	@Override
-	public void decrypt(int[][] cipher, String key) {
+	public void decrypt(byte[][] cipher, String key) {
 
 	}
 
 	@Override
-	public int[][] shiftRows(int[][] state) {
-		int[][] shiftList = state;
+	public byte[][] shiftRows(byte[][] state) {
+		byte[][] shiftList = state;
 		for (int r = 0; r < shiftList.length; r++) {
 			for (int c = 0; c < shiftList[0].length; c++) {
 				shiftList[r][c] = state[r][(c + r) % (shiftList.length)];
 			}
 		}
 		return shiftList;
-	}
-
-	@Override
-	public int[][] mixColumns(int[][] state) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

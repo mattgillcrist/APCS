@@ -18,9 +18,9 @@ public class Transmit implements AESCipher {
 	@Override
 	public byte[][] shiftRows(byte[][] state) {
 		byte[][] shiftList = state;
-		for (int r = 0; r < shiftList.length; r++) {
-			for (int c = 0; c < shiftList[0].length; c++) {
-				shiftList[r][c] = state[r][(c + r) % (shiftList.length)];
+		for(int r = 0; r < shiftList.length; r++){
+			for(int c = 0; c < shiftList[0].length; c++){
+				shiftList[r][c] = state[r][(c+r)%(shiftList.length)];
 			}
 		}
 		return shiftList;

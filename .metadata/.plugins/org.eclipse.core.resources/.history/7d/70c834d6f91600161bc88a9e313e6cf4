@@ -1,12 +1,10 @@
 
-public class Transmit implements AESCipher {
+public class Receive implements AESCipher {
+
+	private byte[][] cipher;
 
 	@Override
 	public void encrypt(String text, String key) {
-		String pText = text;
-		String pKey = key;
-		byte[][] byteList = new byte[4][4];
-		byte[][] keyList = new byte[4][4];
 
 	}
 
@@ -14,18 +12,18 @@ public class Transmit implements AESCipher {
 	public void decrypt(byte[][] cipher, String key) {
 
 	}
-
+	
 	@Override
 	public byte[][] shiftRows(byte[][] state) {
 		byte[][] shiftList = state;
-		for (int r = 0; r < shiftList.length; r++) {
-			for (int c = 0; c < shiftList[0].length; c++) {
-				shiftList[r][c] = state[r][(c + r) % (shiftList.length)];
+		for(int r = 0; r < shiftList.length; r++){
+			for(int c = 0; c < shiftList[0].length; c++){
+				shiftList[r][c] = state[r][(c+r)%(shiftList.length)];
 			}
 		}
 		return shiftList;
 	}
-
+	
 	@Override
 	public String toString() {
 		String output = "";

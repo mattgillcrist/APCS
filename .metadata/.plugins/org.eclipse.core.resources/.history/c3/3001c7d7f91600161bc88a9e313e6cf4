@@ -4,5 +4,5 @@ public interface AESCipher {
 
 	public void decrypt(byte[][] cipher, String key);
 
-	public byte[][] shiftRows(byte[][] state);
+	public byte[][] shiftRows(byte[][] cipher);
 }

@@ -1,9 +1,8 @@
 
 public class Transmit implements AESCipher {
 	// table used to mixColumns
-	private final byte[][] galois = { { 00000010, 00000011, 00000001, 00000001 },
-			{ 00000001, 00000010, 00000011, 00000001 }, { 00000001, 00000001, 00000010, 00000011 },
-			{ 00000011, 00000001, 00000001, 00000010 } };
+	private final byte[][] galois = { { 0x02, 0x03, 0x01, 0x01 }, { 0x01, 0x02, 0x03, 0x01 },
+			{ 0x01, 0x01, 0x02, 0x03 }, { 0x03, 0x01, 0x01, 0x02 } };
 
 	// sbox used to exand the key
 	public final int[][] sbox = {
@@ -72,27 +71,15 @@ public class Transmit implements AESCipher {
 	@Override
 	public byte[][] mixColumns(byte[][] state) {
 		byte[][] mixList = new byte[state.length][state[0].length];
-		for (int c = 0; c < state[0].length; c++) {
-			for (int g = 0; g < galois[0].length; g++) {
-				mixList[g][c] = (byte) (FFMul(galois[0][g], state[g][0]) ^ FFMul(galois[1][g], state[g][1])
-						^ FFMul(galois[2][g], state[g][2]) ^ FFMul(galois[3][g], state[g][3]));
+		int sum = 0;
+		for(int c = 0; c < state[0].length;c++){
+			for(int g = 0; g < galois[0].length;g++){
+				for(int r = 0; r < state.length; r++){
+					
+				}
 			}
 		}
-		return mixList;
-	}
-
-	public byte FFMul(byte a, byte b) {
-		byte aa = a, bb = b, r = 0, t;
-		while (aa != 0) {
-			if ((aa & 1) != 0)
-				r = (byte) (r ^ bb);
-			t = (byte) (bb & 0x80);
-			bb = (byte) (bb << 1);
-			if (t != 0)
-				bb = (byte) (bb ^ 0x1b);
-			aa = (byte) ((aa & 0xff) >> 1);
-		}
-		return r;
+		return null;
 	}
 
 	@Override

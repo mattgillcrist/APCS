@@ -1,0 +1,83 @@
+
+public class Transmit implements AESCipher {
+	// table used to mixColumns
+	private final byte[][] galois = { { 00000010, 00000011, 00000001, 00000001 },
+			{ 00000001, 00000010, 00000011, 00000001 }, { 00000001, 00000001, 00000010, 00000011 },
+			{ 00000011, 00000001, 00000001, 00000010 } };
+
+	public Transmit() {
+	}
+
+	@Override
+	public void encrypt(String text, String key) {
+		String pText = text;
+		String pKey = key;
+		byte[][] byteList = new byte[4][4];
+		byte[][] keyList = new byte[4][4];
+
+	}
+
+	@Override
+	public void decrypt(byte[][] cipher, String key) {
+
+	}
+
+	@Override
+	public byte[][] shiftRows(byte[][] state) {
+		byte[][] shiftList = new byte[state.length][state[0].length];
+		for (int i = 0; i < shiftList.length; i++) {
+			for (int j = 0; j < shiftList[0].length; j++) {
+				shiftList[i][j] = state[i][j];
+			}
+		}
+		for (int r = 0; r < shiftList.length; r++) {
+			for (int c = 0; c < shiftList[0].length; c++) {
+				shiftList[r][c] = state[r][(c + r) % (shiftList.length)];
+			}
+		}
+		return shiftList;
+	}
+
+	@Override
+	public byte[][] mixColumns(byte[][] state) {
+		byte[][] mixList = new byte[state.length][state[0].length];
+		for (int c = 0; c < state[0].length; c++) {
+			for (int g = 0; g < galois[0].length; g++) {
+				mixList[g][c] = (byte) (FFMul(galois[0][g], state[g][0]) ^ FFMul(galois[1][g], state[g][1])
+						^ FFMul(galois[2][g], state[g][2]) ^ FFMul(galois[3][g], state[g][3]));
+			}
+		}
+		return mixList;
+	}
+
+	@Override
+	public byte[][] addRoundKey(byte[][] state, byte[][] key) {
+		for (int r = 0; r < state.length; r++) {
+			for (int c = 0; c < state[0].length; c++) {
+				state[r][c] ^= key[r][c];
+			}
+		}
+		return state;
+	}
+
+	public byte FFMul(byte a, byte b) {
+		byte aa = a, bb = b, r = 0, t;
+		while (aa != 0) {
+			if ((aa & 1) != 0)
+				r = (byte) (r ^ bb);
+			t = (byte) (bb & 0x80);
+			bb = (byte) (bb << 1);
+			if (t != 0)
+				bb = (byte) (bb ^ 0x1b);
+			aa = (byte) ((aa & 0xff) >> 1);
+		}
+		return r;
+	}
+
+	@Override
+	public String toString() {
+		String output = "";
+
+		return output;
+	}
+}

@@ -22,29 +22,13 @@ public class Transmit implements AESCipher {
 			{ 0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf },
 			{ 0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16 } };
 
-	private byte[][] keySched;
-	private byte[][] originalKey;
-	private int keyColumn; // for addRoundKey method
-
 	public Transmit() {
-		keySched = new byte[4][44];
-		originalKey = new byte[][] { { 0x74, 0x68, 0x69, 0x73 }, { 0x49, 0x73, 0x4f, 0x75 }, { 0x72, 0x41, 0x45, 0x53 },
-				{ 0x4b, 0x65, 0x79, 0x21 } };
-				// translates to "thisIsOurAESKey!"
-
-		// fill in first 4x4 of schedule with the original key
-		for (int r = 0; r < 4; r++) {
-			for (int c = 0; c < 4; c++) {
-				keySched[r][c] = originalKey[r][c];
-			}
-		}
-		keyColumn = 4; // initializes to index of first column in the first round key
 	}
 
 	@Override
 	public byte[][] encrypt(String text, byte[][] key) {
 		String pText = text;
-		// String pKey = key;
+		//String pKey = key;
 		byte[][] stateList = new byte[4][4];
 		byte[][] keyList = new byte[4][4];
 
@@ -117,10 +101,9 @@ public class Transmit implements AESCipher {
 	public byte[][] addRoundKey(byte[][] state, byte[][] key) {
 		for (int r = 0; r < state.length; r++) {
 			for (int c = 0; c < state[0].length; c++) {
-				state[r][c] ^= key[r][c + keyColumn];
+				state[r][c] ^= key[r][c];
 			}
 		}
-		keyColumn += 4;
 		return state;
 	}
 
@@ -137,63 +120,6 @@ public class Transmit implements AESCipher {
 			aa = (byte) ((aa & 0xff) >> 1);
 		}
 		return r;
-	}
-	
-	// ---------- key expansion methods ----------
-
-	public void expandKey() {
-
-		int index = 0; // indicates index of the first column of each round
-
-		for (int round = 0; round < 10; round++) {
-			expandLastCol(index);
-			expandOtherCol(index + 5);
-			expandOtherCol(index + 6);
-			expandOtherCol(index + 7);
-
-			index = index + 4; // go to next round
-		}
-
-	}
-
-	// works on last column of each round key
-	public void expandLastCol(int index) {
-
-		int[][] column = new int[4][1];
-
-		// rotate last column of key + substitute with sbox
-		byte top = keySched[0][index + 3];
-		column[0][0] = subBytes(keySched[1][index + 3]);
-		column[1][0] = subBytes(keySched[2][index + 3]);
-		column[2][0] = subBytes(keySched[3][index + 3]);
-		column[3][0] = subBytes(top);
-
-		// XOR top item with round constant
-		column[0][0] = column[0][0] ^ rcon[index / 4];
-
-		// fill in first column of new round
-		keySched[0][index + 4] = (byte) (column[0][0] ^ keySched[0][index]);
-		keySched[1][index + 4] = (byte) (column[1][0] ^ keySched[1][index]);
-		keySched[2][index + 4] = (byte) (column[2][0] ^ keySched[2][index]);
-		keySched[3][index + 4] = (byte) (column[3][0] ^ keySched[3][index]);
-
-	}
-
-	public void expandOtherCol(int col) {
-
-		// XOR previous column with the same column of previous round key
-		keySched[0][col] = (byte) (keySched[0][col - 1] ^ keySched[0][col - 4]);
-		keySched[1][col] = (byte) (keySched[1][col - 1] ^ keySched[1][col - 4]);
-		keySched[2][col] = (byte) (keySched[2][col - 1] ^ keySched[2][col - 4]);
-		keySched[3][col] = (byte) (keySched[3][col - 1] ^ keySched[3][col - 4]);
-
-	}
-
-	public byte subBytes(byte b) {
-
-		// substitute using s-box
-		return (byte) sbox[(b & 0xf0) >> 4][b & 0x0f];
-
 	}
 
 	@Override

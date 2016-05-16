@@ -24,6 +24,7 @@ public class Transmit implements AESCipher {
 
 	private byte[][] keySched;
 	private byte[][] originalKey;
+	private int keyColumn; // for addRoundKey method
 
 	public Transmit() {
 		keySched = new byte[4][44];
@@ -36,7 +37,8 @@ public class Transmit implements AESCipher {
 			for (int c = 0; c < 4; c++) {
 				keySched[r][c] = originalKey[r][c];
 			}
-		}		
+		}
+		keyColumn = 4; // initializes to index of first column in the first round key
 	}
 
 	@Override
@@ -102,9 +104,10 @@ public class Transmit implements AESCipher {
 	public byte[][] addRoundKey(byte[][] state, byte[][] key) {
 		for (int r = 0; r < state.length; r++) {
 			for (int c = 0; c < state[0].length; c++) {
-				state[r][c] ^= key[r][c];
+				state[r][c] ^= key[r][c + keyColumn];
 			}
 		}
+		keyColumn += 4;
 		return state;
 	}
 

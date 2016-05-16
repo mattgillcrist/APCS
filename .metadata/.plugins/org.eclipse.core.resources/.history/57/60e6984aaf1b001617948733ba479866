@@ -1,7 +1,7 @@
 
 public interface AESCipher {
 
-	public byte[][] encrypt(byte[][] state);
+	public byte[][] encrypt(byte[][] state, byte[][] key);
 
 	public void decrypt(byte[][] cipher, String key);
 

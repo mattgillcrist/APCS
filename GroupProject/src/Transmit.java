@@ -119,8 +119,8 @@ public class Transmit implements AESCipher {
 			for (int c = 0; c < state[0].length; c++) {
 				state[r][c] ^= key[r][c + keyColumn];
 			}
+			keyColumn += 4;
 		}
-		keyColumn += 4;
 		return state;
 	}
 

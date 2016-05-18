@@ -1,0 +1,34 @@
+import java.util.Arrays;
+
+public class AESTest {
+	public static void main(String[] args) {
+		Transmit test = new Transmit();
+
+		// this is a test state
+		byte[][] state = { { (byte) 01110100, (byte) 01101000, (byte) 01101001, (byte) 01110011 },
+				{ (byte) 01101001, (byte) 01110011, (byte) 01100001, (byte) 01110100 },
+				{ (byte) 01100101, (byte) 01110011, (byte) 01110100, (byte) 01110011 },
+				{ (byte) 01110100, (byte) 01100001, (byte) 01110100, (byte) 01100101 } };
+		
+		byte[][] encryptList = new byte[4][4];
+
+		for(int r = 0; r < state.length; r++){
+			for(int c = 0; c < state[0].length; c++){
+				System.out.print(state[r][c] + " ");
+			}
+			System.out.println();
+		}
+		
+		System.out.println();
+		System.out.println();
+		
+		encryptList = test.encrypt(state);
+		for(int r = 0; r < state.length; r++){
+			for(int c = 0; c < state[0].length; c++){
+				System.out.println(encryptList[r][c] + " ");
+			}
+			System.out.println();
+		}
+		
+	}
+}

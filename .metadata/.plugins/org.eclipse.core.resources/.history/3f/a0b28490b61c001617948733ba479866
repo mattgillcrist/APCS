@@ -119,6 +119,12 @@ public class Transmit implements AESCipher {
 		return subList;
 	}
 
+	public byte[][] invSubBytes(byte[][] state) {
+		byte[][] subList = new byte[state.length][state[0].length];
+
+		return subList;
+	}
+
 	@Override
 	public byte[][] shiftRows(byte[][] state) {
 		byte[][] shiftList = new byte[state.length][state[0].length];

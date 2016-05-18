@@ -3,10 +3,11 @@ public class AESTest {
 		Transmit test = new Transmit();
 
 		// this is a test state
-		byte[][] state = { { (byte) 0x74, (byte) 0x68, (byte) 0x69, (byte) 0x73 },
-				{ (byte) 0x69, (byte) 0x73, (byte) 0x61, (byte) 0x74 },
-				{ (byte) 0x65, (byte) 0x73, (byte) 0x74, (byte) 0x73 },
-				{ (byte) 0x74, (byte) 0x61, (byte) 0x74, (byte) 0x65 } };
+		byte[][] state = { { (byte) 01110100, (byte) 01101000, (byte) 01101001, (byte) 01110011 },
+				{ (byte) 01101001, (byte) 01110011, (byte) 01100001, (byte) 01110100 },
+				{ (byte) 01100101, (byte) 01110011, (byte) 01110100, (byte) 01110011 },
+				{ (byte) 01110100, (byte) 01100001, (byte) 01110100, (byte) 01100101 } };
+
 		byte[][] encryptList = new byte[4][4];
 
 		for (int r = 0; r < state.length; r++) {
@@ -19,17 +20,7 @@ public class AESTest {
 		System.out.println();
 		System.out.println();
 
-		encryptList = test.encrypt(state);
-
-		for (int r = 0; r < state.length; r++) {
-			for (int c = 0; c < state[0].length; c++) {
-				System.out.print(encryptList[r][c] + " ");
-			}
-			System.out.println();
-		}
-
-		System.out.println();
-		System.out.println();
+		// encryptList = test.encrypt(state);
 
 		for (int r = 0; r < state.length; r++) {
 			for (int c = 0; c < state[0].length; c++) {
@@ -43,11 +34,6 @@ public class AESTest {
 			}
 			System.out.println();
 		}
-
-		// 126 202 80 24
-		// 172 1 0 224
-		// 145 104 42 193
-		// 197 184 73 42
 
 	}
 }

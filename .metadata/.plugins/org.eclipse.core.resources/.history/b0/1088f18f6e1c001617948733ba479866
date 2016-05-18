@@ -74,21 +74,19 @@ public class Transmit implements AESCipher {
 				keySched[r][c] = originalKey[r][c];
 			}
 		}
-		keyColumn = 3; // initializes to index of first column in the first
+		keyColumn = 4; // initializes to index of first column in the first
 						// round key
 	}
 
 	@Override
 	public byte[][] encrypt(byte[][] state) {
-		keyColumn = 4;
 		// String pText = text;
 		// String pKey = key;
 		byte[][] stateList = new byte[4][4];
 
-		expandKey();
 		stateList = addRoundKey(state);
 
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 8; i++) {
 			stateList = subBytes(stateList);
 			stateList = shiftRows(stateList);
 			stateList = mixColumns(stateList);
@@ -110,10 +108,14 @@ public class Transmit implements AESCipher {
 	@Override
 	public byte[][] subBytes(byte[][] state) {
 		byte[][] subList = new byte[state.length][state[0].length];
-		subList = state;
+		for (int i = 0; i < subList.length; i++) {
+			for (int j = 0; j < subList[0].length; j++) {
+				subList[i][j] = state[i][j];
+			}
+		}
 		for (int r = 0; r < state.length; r++) {
 			for (int c = 0; c < state[0].length; c++) {
-				subList[r][c] = (byte) sbox[(state[r][c] & 0xF0) >> 4][(state[r][c] & 0x0F)];
+				subList[r][c] = (byte) sbox[(state[r][c] & 0xF0) >> 4][(state[r][c] & 0x0F) >> 4];
 			}
 		}
 		return subList;
@@ -122,7 +124,11 @@ public class Transmit implements AESCipher {
 	@Override
 	public byte[][] shiftRows(byte[][] state) {
 		byte[][] shiftList = new byte[state.length][state[0].length];
-		shiftList = state;
+		for (int i = 0; i < shiftList.length; i++) {
+			for (int j = 0; j < shiftList[0].length; j++) {
+				shiftList[i][j] = state[i][j];
+			}
+		}
 		for (int r = 0; r < shiftList.length; r++) {
 			for (int c = 0; c < shiftList[0].length; c++) {
 				shiftList[r][c] = state[r][(c + r) % (shiftList.length)];
@@ -148,10 +154,10 @@ public class Transmit implements AESCipher {
 	public byte[][] addRoundKey(byte[][] state) {
 		for (int r = 0; r < state.length; r++) {
 			for (int c = 0; c < state[0].length; c++) {
-				state[r][c] ^= keySched[r][c + keyColumn];
+				state[r][c] ^= keySched[r][(c-1) + keyColumn];
 			}
+			keyColumn += 4;
 		}
-		keyColumn += 4;
 		return state;
 	}
 

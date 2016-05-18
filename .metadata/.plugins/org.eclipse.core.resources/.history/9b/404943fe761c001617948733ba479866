@@ -85,10 +85,9 @@ public class Transmit implements AESCipher {
 		// String pKey = key;
 		byte[][] stateList = new byte[4][4];
 
-		expandKey();
 		stateList = addRoundKey(state);
 
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 8; i++) {
 			stateList = subBytes(stateList);
 			stateList = shiftRows(stateList);
 			stateList = mixColumns(stateList);
@@ -110,7 +109,11 @@ public class Transmit implements AESCipher {
 	@Override
 	public byte[][] subBytes(byte[][] state) {
 		byte[][] subList = new byte[state.length][state[0].length];
-		subList = state;
+		for (int i = 0; i < subList.length; i++) {
+			for (int j = 0; j < subList[0].length; j++) {
+				subList[i][j] = state[i][j];
+			}
+		}
 		for (int r = 0; r < state.length; r++) {
 			for (int c = 0; c < state[0].length; c++) {
 				subList[r][c] = (byte) sbox[(state[r][c] & 0xF0) >> 4][(state[r][c] & 0x0F)];
@@ -119,10 +122,20 @@ public class Transmit implements AESCipher {
 		return subList;
 	}
 
+	public byte[][] invSubBytes(byte[][] state) {
+		byte[][] subList = new byte[state.length][state[0].length];
+
+		return subList;
+	}
+
 	@Override
 	public byte[][] shiftRows(byte[][] state) {
 		byte[][] shiftList = new byte[state.length][state[0].length];
-		shiftList = state;
+		for (int i = 0; i < shiftList.length; i++) {
+			for (int j = 0; j < shiftList[0].length; j++) {
+				shiftList[i][j] = state[i][j];
+			}
+		}
 		for (int r = 0; r < shiftList.length; r++) {
 			for (int c = 0; c < shiftList[0].length; c++) {
 				shiftList[r][c] = state[r][(c + r) % (shiftList.length)];

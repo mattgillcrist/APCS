@@ -110,7 +110,7 @@ public class Transmit implements AESCipher {
 	@Override
 	public byte[][] subBytes(byte[][] state) {
 		byte[][] subList = new byte[state.length][state[0].length];
-		// subList = state;
+		subList = state;
 		for (int r = 0; r < state.length; r++) {
 			for (int c = 0; c < state[0].length; c++) {
 				subList[r][c] = (byte) sbox[(state[r][c] & 0xF0) >> 4][(state[r][c] & 0x0F)];
@@ -122,12 +122,7 @@ public class Transmit implements AESCipher {
 	@Override
 	public byte[][] shiftRows(byte[][] state) {
 		byte[][] shiftList = new byte[state.length][state[0].length];
-		// shiftList = state;
-		for (int r = 0; r < shiftList.length; r++) {
-			for (int c = 0; c < shiftList[0].length; c++) {
-				shiftList[r][c] = state[r][c];
-			}
-		}
+		shiftList = state;
 		for (int r = 0; r < shiftList.length; r++) {
 			for (int c = 0; c < shiftList[0].length; c++) {
 				shiftList[r][c] = state[r][(c + r) % (shiftList.length)];

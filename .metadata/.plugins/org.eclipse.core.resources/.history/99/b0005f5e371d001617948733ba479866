@@ -32,20 +32,6 @@ public class AESTest {
 			System.out.println();
 		}
 
-		System.out.println();
-		System.out.println();
-
-		byte[][] shiftRowTest = { { 1, 2, 3, 4 }, { 1, 2, 3, 4 }, { 1, 2, 3, 4 }, { 1, 2, 3, 4 } };
-
-		shiftRowTest = test.shiftRows(shiftRowTest);
-
-		for (int r = 0; r < shiftRowTest.length; r++) {
-			for (int c = 0; c < shiftRowTest[0].length; c++) {
-				System.out.print(shiftRowTest[r][c] + " ");
-			}
-			System.out.println();
-		}
-
 		// 126 202 80 24
 		// 172 1 0 224
 		// 145 104 42 193

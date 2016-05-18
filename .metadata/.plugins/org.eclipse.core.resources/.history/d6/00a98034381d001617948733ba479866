@@ -110,7 +110,7 @@ public class Transmit implements AESCipher {
 	@Override
 	public byte[][] subBytes(byte[][] state) {
 		byte[][] subList = new byte[state.length][state[0].length];
-		// subList = state;
+		//subList = state;
 		for (int r = 0; r < state.length; r++) {
 			for (int c = 0; c < state[0].length; c++) {
 				subList[r][c] = (byte) sbox[(state[r][c] & 0xF0) >> 4][(state[r][c] & 0x0F)];

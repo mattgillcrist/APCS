@@ -41,7 +41,7 @@ public class AESTest {
 
 		for (int r = 0; r < shiftRowTest.length; r++) {
 			for (int c = 0; c < shiftRowTest[0].length; c++) {
-				System.out.print(shiftRowTest[r][c] + " ");
+				System.out.print(shiftRowTest[r][c]);
 			}
 			System.out.println();
 		}

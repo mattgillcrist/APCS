@@ -80,7 +80,7 @@ public class Transmit implements AESCipher {
 
 	@Override
 	public byte[][] encrypt(byte[][] state) {
-		keyColumn = 0;
+		keyColumn = 1;
 		// String pText = text;
 		// String pKey = key;
 		byte[][] stateList = new byte[4][4];

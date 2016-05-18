@@ -74,13 +74,13 @@ public class Transmit implements AESCipher {
 				keySched[r][c] = originalKey[r][c];
 			}
 		}
-		keyColumn = 0; // initializes to index of first column in the first
+		keyColumn = 3; // initializes to index of first column in the first
 						// round key
 	}
 
 	@Override
 	public byte[][] encrypt(byte[][] state) {
-		keyColumn = 0;
+		keyColumn = 4;
 		// String pText = text;
 		// String pKey = key;
 		byte[][] stateList = new byte[4][4];
@@ -97,7 +97,7 @@ public class Transmit implements AESCipher {
 
 		stateList = subBytes(stateList);
 		stateList = shiftRows(stateList);
-		stateList = addRoundKey(stateList);
+		stateList = mixColumns(stateList);
 
 		return stateList;
 	}

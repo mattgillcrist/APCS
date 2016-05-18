@@ -19,6 +19,18 @@ public class AESTest {
 		System.out.println();
 		System.out.println();
 
+		encryptList = test.encrypt(state);
+
+		for (int r = 0; r < state.length; r++) {
+			for (int c = 0; c < state[0].length; c++) {
+				System.out.print(encryptList[r][c] + " ");
+			}
+			System.out.println();
+		}
+
+		System.out.println();
+		System.out.println();
+
 		for (int r = 0; r < state.length; r++) {
 			for (int c = 0; c < state[0].length; c++) {
 				encryptList[r][c] = test.encrypt(state)[r][c];
